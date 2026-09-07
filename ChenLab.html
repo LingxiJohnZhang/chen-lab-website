@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Chen Research Lab | Kean University</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* Pastel Light Blue Base Color Palette */
+            --bg-main: #f0f6fb;
+            --bg-gradient: linear-gradient(180deg, #eef5fc 0%, #f7fafd 50%, #eef5fc 100%);
+            --bg-card: #ffffff;
+            --primary: #3b82f6;
+            --primary-soft: #f0f7ff;
+            --primary-dark: #1e3a8a;
+            --accent: #60a5fa;
+            --pastel-blue-light: #e0f2fe;
+            --pastel-blue-hover: #bae6fd;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 2px 4px rgba(148, 163, 184, 0.08);
+            --shadow-md: 0 10px 25px -5px rgba(59, 130, 246, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+            --shadow-lg: 0 20px 25px -5px rgba(59, 130, 246, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-pill: 50px;
+
+            /* Brand / Module Specific Accent Colors */
+            --badge-top2-bg: linear-gradient(135deg, #fffbe3 0%, #fef3c7 100%);
+            --badge-top2-text: #b45309;
+            --badge-top2-border: #fde68a;
+
+            --badge-orcid-bg: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            --badge-orcid-text: #15803d;
+            --badge-orcid-border: #bbf7d0;
+
+            --badge-rg-bg: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+            --badge-rg-text: #0f766e;
+            --badge-rg-border: #99f6e4;
+
+            --badge-scholar-bg: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            --badge-scholar-text: #1d4ed8;
+            --badge-scholar-border: #bfdbfe;
+
+            --badge-linkedin-bg: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            --badge-linkedin-text: #0369a1;
+            --badge-linkedin-border: #bae6fd;
+
+            --badge-directory-bg: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+            --badge-directory-text: #6b21a8;
+            --badge-directory-border: #d8b4fe;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            list-style: none;
+            min-width: 280px;
+            padding: 0.5rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-menu li a {
+            display: block;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.88rem;
+            color: var(--text-dark);
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: var(--primary-soft);
+            color: var(--primary);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #93c5fd 100%);
+            padding: 5.5rem 2rem;
+            text-align: center;
+            position: relative;
+            box-shadow: inset 0 -10px 20px rgba(0,0,0,0.02);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+        }
+
+        .hero p.subtitle {
+            font-size: 1.25rem;
+            color: #334155;
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+        }
+
+        .quotes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .quote-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            border-left: 4px solid var(--primary);
+            padding: 1.2rem 1.5rem;
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            text-align: left;
+            font-style: italic;
+            color: #334155;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s ease;
+        }
+
+        .quote-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .quote-card span {
+            display: block;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            font-style: normal;
+            font-size: 0.85rem;
+            color: var(--primary-dark);
+        }
+
+        /* --- Main Layout --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* --- Section Details & Styling --- */
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .area-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .area-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-sm);
+            background: var(--primary-soft);
+            border-color: #cbd5e1;
+        }
+
+        .area-card .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .area-card h3 {
+            color: var(--primary-dark);
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* Scale Cards */
+        .scale-card {
+            background: #f8fafc;
+            padding: 1.8rem;
+            border-radius: var(--radius-md);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+
+        .scale-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-sm);
+            background: var(--primary-soft);
+            border-color: #cbd5e1;
+        }
+
+        .scale-card h3 {
+            color: var(--primary-dark);
+            font-size: 1.15rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .scale-author {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 0.8rem;
+        }
+
+        .scale-desc {
+            font-size: 0.92rem;
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        .scale-links {
+            margin-top: 1.2rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .scale-links a {
+            color: var(--primary-dark);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s ease;
+        }
+
+        .scale-links a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .scale-links .divider {
+            color: var(--border-color);
+        }
+
+        /* About Jennifer Chen Styling */
+        .profile-header {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .profile-info h2 {
+            font-size: 2rem;
+            color: var(--primary-dark);
+        }
+
+        .profile-info p.title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .meta-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .meta-list li {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* --- Enriched Multi-Color Badges --- */
+        .badge-bar {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .badge-link {
+            text-decoration: none;
+            padding: 0.45rem 1rem;
+            border-radius: var(--radius-pill);
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        }
+
+        .badge-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Module-Specific Badge Styles */
+        .badge-top2 {
+            background: var(--badge-top2-bg);
+            color: var(--badge-top2-text);
+            border: 1px solid var(--badge-top2-border);
+        }
+
+        .badge-orcid {
+            background: var(--badge-orcid-bg);
+            color: var(--badge-orcid-text);
+            border: 1px solid var(--badge-orcid-border);
+        }
+
+        .badge-rg {
+            background: var(--badge-rg-bg);
+            color: var(--badge-rg-text);
+            border: 1px solid var(--badge-rg-border);
+        }
+
+        .badge-scholar {
+            background: var(--badge-scholar-bg);
+            color: var(--badge-scholar-text);
+            border: 1px solid var(--badge-scholar-border);
+        }
+
+        .badge-linkedin {
+            background: var(--badge-linkedin-bg);
+            color: var(--badge-linkedin-text);
+            border: 1px solid var(--badge-linkedin-border);
+        }
+
+        .badge-directory {
+            background: var(--badge-directory-bg);
+            color: var(--badge-directory-text);
+            border: 1px solid var(--badge-directory-border);
+        }
+
+        .sub-block {
+            margin-top: 2rem;
+        }
+
+        .sub-block h4 {
+            font-size: 1.15rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--pastel-blue-light);
+            padding-bottom: 0.4rem;
+        }
+
+        .custom-list {
+            list-style: none;
+        }
+
+        .custom-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .custom-list li::before {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--primary);
+            font-size: 0.85rem;
+        }
+
+        .pub-list li {
+            padding-left: 0;
+            margin-bottom: 1rem;
+            font-size: 0.92rem;
+            line-height: 1.5;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 0.8rem;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e293b 100%);
+            color: #ffffff;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <i class="fa-solid fa-flask-vial"></i> The Chen Research Lab
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#Chen">About Jennifer Chen</a></li>
+                    <li><a href="#projects">New Projects</a></li>
+                    <li><a href="#scales">Scales & Permission</a></li>
+                    <li><a href="#join">Join the Lab</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Welcome to the Chen Research Lab</h1>
+            <p class="subtitle">Focusing on early childhood teachers and young children's development</p>
+
+            <div class="quotes-container">
+                <div class="quote-card">
+                    “If we knew what it is we were doing, it would not be called research. Would it?”
+                    <span>— Albert Einstein</span>
+                </div>
+                <div class="quote-card">
+                    “If there were only one truth, you couldn’t paint a hundred canvases on the same theme.”
+                    <span>— Pablo Picasso, 1966</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container">
+
+        <section class="card">
+            <h2 class="section-title">Current Research Areas</h2>
+            <p class="section-subtitle">Overview of primary research domains pursued at the lab.</p>
+            <div class="grid-3">
+                <div class="area-card" style="display: block;">
+                    <i class="fa-solid fa-chalkboard-user" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                    <h3>Teaching Experiences</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-dark); margin-top: 0.5rem;">Investigating early childhood teachers' pedagogical experiences, teacher stress, wellbeing, and thriving in educational environments.</p>
+                </div>
+                <div class="area-card" style="display: block;">
+                    <i class="fa-solid fa-child-reaching" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                    <h3>Pedagogical Practices</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-dark); margin-top: 0.5rem;">Analyzing developmentally appropriate practices, social-emotional learning, and responsive practices for dual language learners.</p>
+                </div>
+                <div class="area-card" style="display: block;">
+                    <i class="fa-solid fa-robot" style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                    <h3>AI in Early Childhood Education</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-dark); margin-top: 0.5rem;">Exploring the ethical, purposeful, and effective integration of Artificial Intelligence in young children's learning and teacher practices.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="Chen" class="card">
+            <h2 class="section-title">About Jennifer Chen, Ed.D.</h2>
+            
+            <div class="profile-header">
+                <div class="profile-info">
+                    <h2>Dr. Jennifer Chen</h2>
+                    <p class="title">Professor of Early Childhood Education, Kean University | Senior Research Fellow at NIEER, Rutgers University</p>
+                    <ul class="meta-list">
+                        <li><i class="fa-solid fa-building-columns"></i> Department of Early Childhood Education, Kean University</li>
+                        <li><i class="fa-solid fa-door-open"></i> Office: Hennings Hall (HH) - 419</li>
+                        <li><i class="fa-solid fa-envelope"></i> jchen@kean.edu</li>
+                        <li><i class="fa-solid fa-phone"></i> (908) 737-3809</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="badge-bar">
+                <a href="https://www.kean.edu/news/kean-faculty-recognized-again-among-worlds-top-2-scientists" target="_blank" rel="noopener noreferrer" class="badge-link badge-top2"><i class="fa-solid fa-award"></i> World's Top 2% Scientists</a>
+                <a href="https://orcid.org/0000-0003-3181-0033" target="_blank" rel="noopener noreferrer" class="badge-link badge-orcid"><i class="fa-solid fa-id-badge"></i> ORCID</a>
+                <a href="https://www.researchgate.net/profile/Jennifer-Chen-16" target="_blank" rel="noopener noreferrer" class="badge-link badge-rg"><i class="fa-brands fa-researchgate"></i> ResearchGate</a>
+                <a href="https://scholar.google.com/citations?hl=en&user=8QK9ay0AAAAJ" target="_blank" rel="noopener noreferrer" class="badge-link badge-scholar"><i class="fa-solid fa-graduation-cap"></i> Google Scholar</a>
+                <a href="https://www.linkedin.com/in/jennifer-j-chen-788082120/" target="_blank" rel="noopener noreferrer" class="badge-link badge-linkedin"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+                <a href="https://www.kean.edu/directory/jennifer-chen" target="_blank" rel="noopener noreferrer" class="badge-link badge-directory"><i class="fa-solid fa-address-card"></i> Kean Directory Profile</a>
+            </div>
+
+            <div class="sub-block">
+                <h4>Biography</h4>
+                <p><strong>Dr. Jennifer Chen</strong> is Professor of Early Childhood Education at Kean University and a Senior Research Fellow at NIEER, Rutgers University. She is a well-respected scholar who has authored or co-authored more than 100 scholarly publications, including four books, co-edited volumes, and numerous refereed research articles. Her research threads multiple strands of early childhood education (ECE), including child development, language and literacy, teacher stress and thriving, and the role of AI in young children's learning. Dr. Chen developed the pioneering POWER (Purposeful, Optimal, Wise, Ethical, Responsible) framework to guide ethical and developmentally appropriate AI practices in ECE.</p>
+            </div>
+
+            <div class="sub-block">
+                <h4>Education</h4>
+                <ul class="custom-list">
+                    <li><strong>Ed.D.</strong>, Human Development & Psychology, Harvard University</li>
+                    <li><strong>Ed.M.</strong>, Language & Literacy, Harvard University</li>
+                    <li><strong>M.A.</strong>, Bilingual/Bicultural Education, Teachers College, Columbia University</li>
+                    <li><strong>B.A.</strong>, Psychology with a minor in Linguistics, Barnard College, Columbia University</li>
+                </ul>
+            </div>
+
+            <div class="sub-block">
+                <h4>Selected Awards</h4>
+                <ul class="custom-list">
+                    <li>Excellence in Research Award, Kean University (2026)</li>
+                    <li>Kean Presidential Excellence Award for Scholarship/Research (2025)</li>
+                    <li>Faculty Mentoring Program Recipient Award, Kean University (2025)</li>
+                    <li>Outstanding Early Childhood Teacher Educator Award, NAECTE Foundation (2023)</li>
+                    <li>Exchange Leader, The Exchange Leadership Initiative in Early Care and Education (2023)</li>
+                    <li>Distinguished Scholarship in Early Childhood Teacher Education Award, NJAECTE (2022)</li>
+                    <li>Fulbright Scholar in Hong Kong (2013-2014)</li>
+                </ul>
+            </div>
+
+            <div class="sub-block">
+                <h4>Current Research Grants</h4>
+                <ul class="custom-list">
+                    <li><strong>PI:</strong> "Child Care Access Means Parents in School (CCAMPIS) Program at Kean University," U.S. Department of Education ($2.7M+, 2022–2026)</li>
+                    <li><strong>PI:</strong> "A Psychometric Evaluation of the POWER Scales: Assessing AI Use in Teaching Among Early Childhood Teachers," Spencer Foundation (2026–2028)</li>
+                    <li><strong>Co-PI:</strong> "Playing with Sand: Engaging Third Grade Students in Sciences Through Hands-on Investigation," NJ Sea Grant Consortium (2026-2028)</li>
+                    <li><strong>Co-PI:</strong> "CLEAR-AI: Critiquing and Learning to Evaluate AI Financial Reasoning," U.S. National Science Foundation (2026)</li>
+                </ul>
+            </div>
+
+            <div class="sub-block">
+                <h4>Most Recent Publications</h4>
+                <ul class="custom-list pub-list">
+                    <li><strong>Chen, J. J. (2026).</strong> Implementing the Project Approach in a Hong Kong kindergarten: A tale of hybrid pedagogy and glocalization. In A. A. Bautista (Ed.), <i>Culturally situated pedagogies in Hong Kong kindergartens</i> (pp. 83-100). Springer.</li>
+                    <li><strong>Chen, J. J., & Delaney, V. (2026).</strong> Leveraging AI to enhance children's learning: Anchoring policy and practice in equity, ethics, and AI literacy. <i>Early Childhood Education Journal</i>, 54, 2655–2665.</li>
+                    <li><strong>Chen, J. J. (2026).</strong> Made in the image of human creators: Five key pillars to mitigate AI ethical risks and safeguard children's rights. <i>AI and Ethics</i>.</li>
+                    <li><strong>Chen, J. J. (2024).</strong> <i>Responsive practice for dual language learners in early childhood education: Theory and case studies</i>. Redleaf Press.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- New Projects Section -->
+        <section id="projects" class="card">
+            <h2 class="section-title">New Projects</h2>
+            <p class="section-subtitle">Key ongoing and recent research initiatives conducted at The Chen Research Lab.</p>
+            <div class="grid-3">
+                <div class="area-card">
+                    <div class="icon-box"><i class="fa-solid fa-chalkboard-user"></i></div>
+                    <h3>The Teaching Conditions and Experiences</h3>
+                </div>
+
+                <div class="area-card">
+                    <div class="icon-box"><i class="fa-solid fa-child-reaching"></i></div>
+                    <h3>The Child Observation Project</h3>
+                </div>
+
+                <div class="area-card">
+                    <div class="icon-box"><i class="fa-solid fa-book-open"></i></div>
+                    <h3>The Early Childhood Curriculum Project</h3>
+                </div>
+
+                <div class="area-card">
+                    <div class="icon-box"><i class="fa-solid fa-clipboard-check"></i></div>
+                    <h3>The Child Assessment Project</h3>
+                </div>
+
+                <div class="area-card">
+                    <div class="icon-box"><i class="fa-solid fa-briefcase"></i></div>
+                    <h3>The Early Childhood Teaching Experiences Project</h3>
+                </div>
+
+                <div class="area-card">
+                    <div class="icon-box"><i class="fa-solid fa-language"></i></div>
+                    <h3>The Dual Language Learners Project</h3>
+                </div>
+
+                <div class="area-card">
+                    <div class="icon-box"><i class="fa-solid fa-robot"></i></div>
+                    <h3>AI in Early Childhood Education</h3>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scales & Permission to Use Section -->
+        <section id="scales" class="card">
+            <h2 class="section-title">Scales & Permission to Use</h2>
+            <p class="section-subtitle">
+                If you are interested in using any of the following scales for research, clinical work, and/or teaching purposes, please contact Dr. Jennifer Chen at 
+                <a href="mailto:jchen@kean.edu" style="color: var(--primary); font-weight: 500;">jchen@kean.edu</a>.
+            </p>
+
+            <div class="grid-2">
+                <!-- Scale 1 -->
+                <div class="scale-card">
+                    <div>
+                        <h3>1. Teacher Stress Scale (TSS)</h3>
+                        <p class="scale-author">Chen, J. J., Li, Z., Rodrigues, W., & Kaufman, S. (2022)</p>
+                        <p class="scale-desc">Measures teaching-related stress and inadequate school-based support among educators.</p>
+                    </div>
+                    <div class="scale-links">
+                        <a href="https://doi.org/10.1037/t85552-000" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-link"></i> APA PsycTests (ID: 999985552)
+                        </a>
+                        <span class="divider">|</span>
+                        <a href="https://doi.org/10.3389/fpsyg.2022.862342" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-file-pdf"></i> Validation Study (Frontiers)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Scale 2 -->
+                <div class="scale-card">
+                    <div>
+                        <h3>2. Teacher Thriving Scale (TTS)</h3>
+                        <p class="scale-author">Chen, J. J., Li, Z., Rodrigues, W., & Kaufman, S. (2022)</p>
+                        <p class="scale-desc">Assesses teachers' capacity to thrive despite stress across adaptability, personal strengths, and positive mindset.</p>
+                    </div>
+                    <div class="scale-links">
+                        <a href="https://doi.org/10.1037/t85551-000" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-link"></i> APA PsycTests (ID: 999985551)
+                        </a>
+                        <span class="divider">|</span>
+                        <a href="https://doi.org/10.3389/fpsyg.2022.862342" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-file-pdf"></i> Validation Study (Frontiers)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Scale 3 -->
+                <div class="scale-card">
+                    <div>
+                        <h3>3. Perceived Parental Academic Support Scale (PPASS)</h3>
+                        <p class="scale-author">Chen, J. J.-L. (2005)</p>
+                        <p class="scale-desc">Measures student self-perceptions of academic encouragement, resources, and involvement provided by parents.</p>
+                    </div>
+                    <div class="scale-links">
+                        <a href="https://doi.org/10.1037/t02755-000" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-link"></i> APA PsycTests (ID: 999902755)
+                        </a>
+                        <span class="divider">|</span>
+                        <a href="https://doi.org/10.3200/MONO.131.2.77-127" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-book"></i> Journal Monograph
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Scale 4 -->
+                <div class="scale-card">
+                    <div>
+                        <h3>4. Perceived Teacher Academic Support Scale (PTASS)</h3>
+                        <p class="scale-author">Chen, J. J.-L. (2005)</p>
+                        <p class="scale-desc">Evaluates students' perceived academic support, guidance, and high expectations from their teachers.</p>
+                    </div>
+                    <div class="scale-links">
+                        <a href="https://doi.org/10.1037/t02756-000" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-link"></i> APA PsycTests (ID: 999902756)
+                        </a>
+                        <span class="divider">|</span>
+                        <a href="https://doi.org/10.3200/MONO.131.2.77-127" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-book"></i> Journal Monograph
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Scale 5 -->
+                <div class="scale-card">
+                    <div>
+                        <h3>5. Perceived Friend/Peer Academic Support Scale (PFASS)</h3>
+                        <p class="scale-author">Chen, J. J.-L. (2005)</p>
+                        <p class="scale-desc">Measures peer encouragement, study collaboration, and positive academic influences within friend networks.</p>
+                    </div>
+                    <div class="scale-links">
+                        <a href="https://doi.org/10.1037/t02757-000" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-link"></i> APA PsycTests (ID: 999902757)
+                        </a>
+                        <span class="divider">|</span>
+                        <a href="https://doi.org/10.3200/MONO.131.2.77-127" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-book"></i> Journal Monograph
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Scale 6 -->
+                <div class="scale-card">
+                    <div>
+                        <h3>6. Perceived Academic Engagement Scale (PAES)</h3>
+                        <p class="scale-author">Chen, J. J.-L. (2005)</p>
+                        <p class="scale-desc">Quantifies student self-perceptions of academic motivation, classroom involvement, and study habits.</p>
+                    </div>
+                    <div class="scale-links">
+                        <a href="https://doi.org/10.1037/t02758-000" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-link"></i> APA PsycTests (ID: 999902758)
+                        </a>
+                        <span class="divider">|</span>
+                        <a href="https://doi.org/10.3200/MONO.131.2.77-127" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-book"></i> Journal Monograph
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+            <section id="join" class="card" style="margin-bottom:0;">
+                <h2 class="section-title">Join the Lab</h2>
+                <p>We welcome undergraduate and graduate students interested in early childhood research, teacher thriving, and AI in education. Students have opportunities to participate in high-impact publication projects and receive mentorship.</p>
+            </section>
+
+            <section id="contact" class="card" style="margin-bottom:0;">
+                <h2 class="section-title">Contact</h2>
+                <p><strong>The Chen Research Lab</strong></p>
+                <p>Department of Early Childhood Education</p>
+                <p>Kean University, Hennings Hall 419</p>
+                <p>1000 Morris Avenue, Union, NJ 07083</p>
+                <p style="margin-top: 0.5rem;"><i class="fa-solid fa-envelope"></i> Email: <a href="mailto:jchen@kean.edu" style="color:var(--primary);">jchen@kean.edu</a></p>
+            </section>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 The Chen Research Lab | Kean University. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
